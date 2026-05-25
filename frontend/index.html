@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Chamados</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, textarea, button { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Abrir Chamado Técnico</h2>
+        <input type="text" id="titulo" placeholder="Título (Ex: Roteador Offline)">
+        <textarea id="descricao" rows="4" placeholder="Descreva o problema..."></textarea>
+        <button onclick="enviarChamado()">Abrir Chamado</button>
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        async function enviarChamado() {
+            const titulo = document.getElementById('titulo').value;
+            const descricao = document.getElementById('descricao').value;
+            const response = await fetch(`/api/chamados/?titulo=${titulo}&descricao=${descricao}`, { method: 'POST' });
+            const data = await response.json();
+            document.getElementById('resultado').innerText = data.mensagem || "Erro.";
+        }
+    </script>
+</body>
+</html>
